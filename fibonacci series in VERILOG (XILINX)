@@ -1,0 +1,46 @@
+module fib(input [5:0]N,output reg [5:0]f3);
+integer i;
+reg [5:0]f1,f2;
+always@(N)
+begin
+$display("N=%d",N);
+f1=0;
+f2=1;
+f3=0;
+$display("f3=%d",f3);
+#2 f3=1;
+$display("f3=%d",f3);
+if(N>1)
+begin
+for(i=2;i<N;i=i+1)
+begin
+#2 f3=f1+f2;
+f1=f2;
+f2=f3;
+$display("f3=%d",f3);
+end
+end
+end 
+initial #50 $stop;
+endmodule
+
+//Test bench
+module fibbtest;
+
+	// Inputs
+	reg [5:0] N;
+
+	// Outputs
+
+	wire [5:0] f3;
+
+	// Instantiate the Unit Under Test (UUT)
+	fib uut (.N(N),.f3(f3));
+initial
+begin
+
+N=4;
+#8 N = 6; 
+#12 N = 10; 
+end
+endmodule
